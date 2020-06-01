@@ -1,0 +1,33 @@
+<div class='container'>
+    <br>
+    <h2 >Post: {{id}}</h2>
+
+    <div class="spinner-border" *ngIf="isLoading"> </div>
+    <div *ngIf="!isLoading" >
+
+        <div class="border border-secondary p-5">
+            <b>User ID:</b> {{post?.userId}}
+            <br>
+            <b>Title:</b> {{post?.title}}
+            <br>
+            <b>Body:</b> <div [innerText]="post?.body"></div>
+        </div>
+
+        <br>
+
+        <h4 >Comments</h4>
+        <div class = 'list-group '*ngFor='let comment of comments'>
+            <div class='list-group-item'>
+                <b>Name:</b> {{comment?.name}}
+                <br>
+                <b>Email:</b> {{comment?.email | lowercase}}
+                <br>
+                <b>Body:</b> <div [innerText]="comment?.body"></div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+    
+</div>

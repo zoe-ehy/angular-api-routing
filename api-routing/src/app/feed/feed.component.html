@@ -1,15 +1,39 @@
 <div class='container'>
-    <h1>News Feed</h1>
-    <h3 *ngIf = 'posts.length === 0'>No Posts Available</h3>
-    <div *ngFor='let post of posts' class = 'list-group'>
-        <div class = 'list-group-item'> 
-            Post ID: {{post.id}}
-            <br>
-            Title: {{post.title | shorten}}
-            <br>
-            Body: {{post.body}}
-            <br>
-            User ID: {{post.userId}}
+    <br>
+    <div *ngIf="isLoading" class="spinner-border" > </div>
+    <div *ngIf="!isLoading" >
+        <h3 *ngIf = 'allPosts?.length === 0'>No Posts Available</h3>
+        <div *ngIf = '!userId'>
+            <h1>News Feed</h1>
+    
+            <div *ngFor='let post of allPosts' class = 'list-group'>
+                <a  class = 'list-group-item '> 
+                    <a [routerLink]="['./']" [queryParams]="{userId: post.userId}">
+                        <b>User ID:</b>: {{post?.userId}}
+                    </a>
+                    <br>
+        
+                    <b>Title:</b> {{post?.title | shorten }}
+        
+                    <div class="btn btn-primary" (click) = "onSelectPost(post?.id)"> &gt; </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div *ngIf="!isLoading">
+        <div *ngIf = 'userId'>
+            <h1>User Wall: {{userId}}</h1>
+            <div class="btn btn-primary" (click)='onBackToNewsFeed()'> Back to News Feed </div>
+
+            <div *ngFor='let userPost of userPosts' class = 'list-group'>
+                <div  class = 'list-group-item '>
+                    <b>Title:</b> {{userPost?.title}}
+                    <br>
+                    <b>Body:</b> <div [innerText]="userPost?.body"></div>
+                </div>
+                
+            </div>
         </div>
     </div>
 </div>
